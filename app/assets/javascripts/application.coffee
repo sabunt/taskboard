@@ -1,2 +1,3 @@
 $(document).on 'turbolinks:load', ->
-  $(".button-collapse").sideNav()
+  $(".button-collapse").on 'click', ->
+    $(".button-collapse").sideNav 

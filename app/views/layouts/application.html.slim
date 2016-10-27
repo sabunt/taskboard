@@ -9,14 +9,16 @@ html(lang="ru")
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0")
 
-    = stylesheet_link_tag("developer", media: "all", "data-turbolinks-track" => true)
+    = stylesheet_link_tag("application", media: "all", "data-turbolinks-track" => true)
     = javascript_include_tag("application", "data-turbolinks-track" => true)
     = csrf_meta_tags
     = yield :head
   body
     nav
       .nav-wrapper
-        a.brand-logo href="#!"  Logo
+        a.brand-logo href="#" 
+          'Taskboard
+          i.material-icons dashboard
         a.button-collapse data-activates="mobile-demo" href="#" 
           i.material-icons menu
         ul.right.hide-on-med-and-down
@@ -37,4 +39,9 @@ html(lang="ru")
             a href="collapsible.html"  Javascript
           li
             a href="mobile.html"  Mobile
-    = yield
+    .container
+      = yield
+
+    javascript:
+        var $toastContent = $('<span>'#{notice}''||''#{alert}'</span>');
+        Materialize.toast($toastContent, 5000);
