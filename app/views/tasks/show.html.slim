@@ -3,6 +3,9 @@ p#notice = notice
 p
   strong Content:
   = @task.content
+p
+  strong State:
+  = @task.state
 
 = link_to 'Edit', edit_task_path(@task)
 '|

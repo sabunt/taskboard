@@ -1,0 +1,25 @@
+/ tr
+/   td = task.content
+/   td = task.state
+/   td = link_to 'Show', task
+/   td = link_to 'Edit', edit_task_path(task)
+/   td = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete
+/   -if task.state == 'doing'
+/     td = link_to 'Mark as To do', change_task_path(task, state: "to_do"), method: :put
+/     td = link_to 'Mark as Done', change_task_path(task, state: "done"), method: :put
+/   -else
+/     td = link_to 'Mark as Doing', change_task_path(task, state: "doing"), method: :put
+.row.taskcard id = '#{task.id}'
+  .col.s12
+    .card.blue-grey.darken-1
+      .card-content.white-text
+        span.card-title Created #{time_ago_in_words(task.created_at)} ago
+        p = task.content
+      .card-action.valign-wrapper
+        -if task.state == 'doing'
+          = link_to '<i class="material-icons">arrow_back</i>'.html_safe, change_task_path(task, state: "to_do"), method: :put
+          = link_to '<i class="material-icons">arrow_forward</i>'.html_safe, change_task_path(task, state: "done"), method: :put
+        -elsif task.state == 'to_do'
+          = link_to '<i class="material-icons">arrow_forward</i>'.html_safe, change_task_path(task, state: "doing"), method: :put
+        -else
+          = link_to '<i class="material-icons">arrow_back</i>'.html_safe, change_task_path(task, state: "doing"), method: :put

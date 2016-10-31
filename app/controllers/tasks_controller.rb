@@ -1,9 +1,12 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :change]
   before_action :authenticate_user!
   
   def index
     @tasks = current_user.tasks
+    @to_do = current_user.tasks.where(state: "to_do")
+    @doing = current_user.tasks.where(state: "doing")
+    @done = current_user.tasks.where(state: "done")
   end
 
 
@@ -19,7 +22,7 @@ class TasksController < ApplicationController
 
 
   def create
-    @task = current_user.task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     respond_to do |format|
       if @task.save
@@ -53,6 +56,13 @@ class TasksController < ApplicationController
     end
   end
 
+  def change
+    @task.update_attributes(state: params[:state]) 
+    respond_to do |format| 
+      format.html { redirect_to tasks_path, notice: "Task status successfully changed"}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -61,6 +71,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:content)
+      params.require(:task).permit(:content,:state)
     end
 end

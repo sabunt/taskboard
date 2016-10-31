@@ -1,21 +1,14 @@
-h1 Listing tasks
 
-table
-  thead
-    tr
-      th Content
-      th
-      th
-      th
-
-  tbody
-    - @tasks.each do |task|
-      tr
-        td = task.content
-        td = link_to 'Show', task
-        td = link_to 'Edit', edit_task_path(task)
-        td = link_to 'Destroy', task, data: { confirm: 'Are you sure?' }, method: :delete
-
+.row
+  .col.m4.sheet
+    h1.center-align To Do
+    = render @to_do
+  .col.m4.sheet
+    h1.center-align Doing
+    = render @doing
+  .col.m4.sheet
+    h1.center-align Done
+    = render @done
 br
 
 = link_to 'New Task', new_task_path
